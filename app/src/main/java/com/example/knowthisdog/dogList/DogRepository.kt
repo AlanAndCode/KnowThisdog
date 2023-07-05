@@ -1,6 +1,6 @@
 package com.example.knowthisdog.dogList
 
-import com.example.knowthisdog.Dog
+import com.example.knowthisdog.model.Dog
 import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.api.DogsApi.retrofitService
 import com.example.knowthisdog.api.dto.DogDTOMapper

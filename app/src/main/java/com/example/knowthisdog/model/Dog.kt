@@ -1,4 +1,4 @@
-package com.example.knowthisdog
+package com.example.knowthisdog.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
