@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.example.knowthisdog.R
 import com.example.knowthisdog.databinding.FragmentLoginBinding
 import com.example.knowthisdog.databinding.FragmentSignUpBinding
+import com.example.knowthisdog.isValidEmail
 
 
 class SignUpFragment : Fragment() {
@@ -55,7 +56,7 @@ class SignUpFragment : Fragment() {
 
         if (!isValidEmail(email)){
             binding.emailInput.error = getString(R.string.email_not_valid)
-                return
+            return
         }
         val password = binding.passwordEdit.text.toString()
 
@@ -78,9 +79,4 @@ class SignUpFragment : Fragment() {
         signUpFragmentActions.onSignUpFieldsValidated(email, password, passwordConfirmation)
     }
 
-
-
-    private fun isValidEmail(email: String?): Boolean {
-        return !email.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
 }
