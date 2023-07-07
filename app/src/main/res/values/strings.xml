@@ -16,4 +16,13 @@
     <string name="error_sign_up">sign_up_error</string>
     <string name="error_sign_in">sign_in_error</string>
     <string name="user_already_exists">sign_up_error</string>
+    <string name="there_was_an_error">there was an error</string>
+    <string name="do_not_have_an_account">do not have an account?</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="email">email</string>
+    <string name="register">register</string>
+    <string name="confirm_password">confirm pass</string>
+    <string name="sign_up">sign up</string>
+    <string name="wrong_user_or_password">Wrong user or password</string>
 </resources>
