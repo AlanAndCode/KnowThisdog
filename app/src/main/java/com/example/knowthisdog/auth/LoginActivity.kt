@@ -12,6 +12,7 @@ import com.example.knowthisdog.MainActivity
 import com.example.knowthisdog.R
 import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.databinding.ActivityLoginBinding
+import com.example.knowthisdog.model.User
 
 
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions, SignUpFragment.SignUpFragmentActions {
@@ -39,6 +40,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions, S
         viewModel.user.observe(this){
            user ->
 if(user != null){
+    User.setLoggedInUser(this, user)
     startMainActivity()
 }
 
@@ -47,6 +49,7 @@ if(user != null){
 
     private fun startMainActivity(){
 startActivity(Intent(this,MainActivity::class.java))
+        finish()
     }
     private fun showErrorDialog(messageId: Int){
         AlertDialog.Builder(this)
