@@ -3,11 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/auth_nav_graph"
     app:startDestination="@id/loginFragment">
-
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.knowthisdog.auth.SignUpFragment"
-        android:label="SignUpFragment" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.knowthisdog.auth.LoginFragment"
@@ -16,4 +11,8 @@
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.knowthisdog.auth.SignUpFragment"
+        android:label="SignUpFragment" />
 </navigation>

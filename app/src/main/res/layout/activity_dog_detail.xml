@@ -6,7 +6,7 @@
 
         <variable
             name="dog"
-            type="com.example.knowthisdog.Dog" />
+            type="com.example.knowthisdog.model.Dog" />
     </data>
 
     <FrameLayout
@@ -236,7 +236,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="@{dog.heightFemale}"
+                                android:text="@{dog.weightMale}"
                                 tools:text="13 - 14.5 kg" />
 
                             <TextView
@@ -251,7 +251,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="@{dog.heightMale}"
+                                android:text="@{dog.weightMale}"
                                 tools:text="37 - 40 cm" />
 
                             <TextView
