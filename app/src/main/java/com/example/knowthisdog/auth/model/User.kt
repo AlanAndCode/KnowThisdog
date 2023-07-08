@@ -1,4 +1,4 @@
-package com.example.knowthisdog.model
+package com.example.knowthisdog.auth.model
 
 import android.app.Activity
 import android.content.Context
@@ -19,7 +19,8 @@ class User (
             private const val AUTH_TOKEN_KEY  = "auth_token"
 
           fun setLoggedInUser(activity: Activity, user: User){
-activity.getSharedPreferences(AUTH_PREFS,
+activity.getSharedPreferences(
+    AUTH_PREFS,
     Context.MODE_PRIVATE).also{
         it.edit()
             .putLong(ID_KEY, user.id)
@@ -44,6 +45,16 @@ activity.getSharedPreferences(AUTH_PREFS,
                     prefs.getString(EMAIL_KEY, "") ?: "",
                     prefs.getString(AUTH_TOKEN_KEY, "") ?: "",
                 )
+            }
+
+            fun logout(activity: Activity){
+                activity.getSharedPreferences(
+                    AUTH_PREFS,
+                    Context.MODE_PRIVATE).also{
+it.edit().clear().apply()
+
+
+                }
             }
         }
 
