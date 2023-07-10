@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.knowthisdog.model.Dog
+import com.example.knowthisdog.auth.model.Dog
 import com.example.knowthisdog.databinding.DogListItemBinding
 
 class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
@@ -27,6 +27,11 @@ private  var onItemClickListener: ((Dog) -> Unit)? = null
             this.onItemClickListener = onItemClickListener
         }
 
+    private  var onLongItemClickListener: ((Dog) -> Unit)? = null
+    fun setLongOnItemClickListener(onLongItemClickListener: (Dog) -> Unit){
+        this.onLongItemClickListener = onLongItemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): DogViewHolder {
 
@@ -45,9 +50,14 @@ private  var onItemClickListener: ((Dog) -> Unit)? = null
 binding.dogListItemLayout.setOnClickListener{
     onItemClickListener?.invoke(dog)
 }
-            binding.dogImage.load(dog.imageUrl)
+        binding.dogListItemLayout.setOnLongClickListener{
+            onLongItemClickListener?.invoke(dog)
+            true
         }
-
+        binding.dogImage.load(dog.imageUrl)
     }
+
+
+}
 
 }

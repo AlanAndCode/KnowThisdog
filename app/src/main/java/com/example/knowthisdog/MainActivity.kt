@@ -3,6 +3,7 @@ package com.example.knowthisdog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.knowthisdog.api.ApiServiceInterceptor
 import com.example.knowthisdog.auth.LoginActivity
 import com.example.knowthisdog.auth.model.User
 import com.example.knowthisdog.databinding.ActivityMainBinding
@@ -18,6 +19,8 @@ val binding = ActivityMainBinding.inflate(layoutInflater)
         if (user == null){
             openLoginActivity()
             return
+        }else {
+            ApiServiceInterceptor.setSessionToken(user.authenticationtoken)
         }
 
         binding.settingsFab.setOnClickListener {
