@@ -15,6 +15,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.example.knowthisdog.WholeImageActivity.Companion.PHOTO_URI_KEY
 import com.example.knowthisdog.api.ApiServiceInterceptor
 import com.example.knowthisdog.auth.LoginActivity
 import com.example.knowthisdog.auth.model.User
@@ -144,12 +145,19 @@ private var isCameraReady = false
                     }
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         // insert your code here.
+                       val photoUri = outputFileResults.savedUri
+                        openWholeImageActivity(photoUri.toString())
                     }
                 })
 
 
     }
 
+    private fun openWholeImageActivity(photoUri: String){
+val intent = Intent(this, WholeImageActivity::class.java)
+        intent.putExtra(WholeImageActivity.PHOTO_URI_KEY, photoUri)
+        startActivity(intent)
+    }
 
     private fun getOutputPhotoFile(): File {
         val mediaDir = externalMediaDirs.firstOrNull()?.let{

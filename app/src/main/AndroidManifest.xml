@@ -15,9 +15,12 @@
         android:theme="@style/Theme.KnowThisDog"
         tools:targetApi="31">
         <activity
-            android:name=".settings.SettingsActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".WholeImageActivity"
             android:exported="false" />
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".auth.LoginActivity"
             android:exported="false" />
@@ -26,8 +29,8 @@
             android:exported="false" />
         <activity
             android:name=".dogList.DogListActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
