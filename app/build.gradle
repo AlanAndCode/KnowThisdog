@@ -48,6 +48,11 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.7.2"
     implementation "io.coil-kt:coil-compose:2.4.0"
 
+    //Camera
+    implementation "androidx.camera:camera-camera2:1.2.3"
+    implementation "androidx.camera:camera-lifecycle:1.2.3"
+    implementation "androidx.camera:camera-view:1.2.3"
+
     // Retrofit to download dogs, Moshi convert json into object that can be used in the application
     implementation "com.squareup.retrofit2:retrofit:2.5.0"
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'

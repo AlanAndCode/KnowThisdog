@@ -42,7 +42,7 @@ return withContext(Dispatchers.IO) {
     if(userDogList.contains(it)){
 it
     } else {
-        Dog(it.id, it.index, "", "", "", "", "", "", "", "", "")
+        Dog(it.id, it.index, "", "", it.heightFemale, it.heightMale, "", "", "", "", "", inCollection = false)
     }
 
     }.sorted()
@@ -54,7 +54,7 @@ it
             dogDTOMapper.fromDogDTOListToDogDomainList(dogDTOList)
         }
 
-   private suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> = makeNetworkCall {
+   suspend fun addDogToUser(dogId: Long): ApiResponseStatus<Any> = makeNetworkCall {
         val addDogToUserDTO = AddDogToUserDTO(dogId)
         val defaultResponse = retrofitService.addDogToUser(addDogToUserDTO)
 
