@@ -9,13 +9,9 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.example.knowthisdog.WholeImageActivity.Companion.PHOTO_URI_KEY
 import com.example.knowthisdog.api.ApiServiceInterceptor
 import com.example.knowthisdog.auth.LoginActivity
 import com.example.knowthisdog.auth.model.User
@@ -184,9 +180,18 @@ val intent = Intent(this, WholeImageActivity::class.java)
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
+            val imageAnalysis = ImageAnalysis.Builder()
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .build()
+imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
+    val rotationDegrees = imageProxy.imageInfo.rotationDegrees
+
+    imageProxy.close()
+
+}
             cameraProvider.bindToLifecycle(
                 this, cameraSelector,
-                preview, imageCapture
+                preview, imageCapture, imageAnalysis
             )
         }, ContextCompat.getMainExecutor(this))
     }
