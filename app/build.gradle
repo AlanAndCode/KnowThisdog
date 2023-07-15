@@ -53,6 +53,11 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:1.2.3"
     implementation "androidx.camera:camera-view:1.2.3"
 
+    // TensorFlow Lite
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
+
+
     // Retrofit to download dogs, Moshi convert json into object that can be used in the application
     implementation "com.squareup.retrofit2:retrofit:2.5.0"
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
