@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.Manifest
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,7 +18,9 @@ import com.example.knowthisdog.auth.LoginActivity
 import com.example.knowthisdog.auth.model.User
 import com.example.knowthisdog.databinding.ActivityMainBinding
 import com.example.knowthisdog.dogList.DogListActivity
+import com.example.knowthisdog.machinelearning.Classifier
 import com.example.knowthisdog.settings.SettingsActivity
+import org.tensorflow.lite.support.common.FileUtil
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -39,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 private lateinit var binding: ActivityMainBinding
 private lateinit var imageCapture: ImageCapture
 private lateinit var cameraExecutor: ExecutorService
+private lateinit var classifier: Classifier
 private var isCameraReady = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +86,13 @@ private var isCameraReady = false
 
     }
 
+    override fun onStart() {
+        super.onStart()
+         classifier = Classifier(
+            FileUtil.loadMappedFile(this@MainActivity, MODEL_PATH),
+            FileUtil.loadLabels(this@MainActivity, LABEL_PATH)
+        )
+    }
     private fun setupCamera() {
         binding.cameraPreview.post {
 
@@ -142,6 +153,9 @@ private var isCameraReady = false
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         // insert your code here.
                        val photoUri = outputFileResults.savedUri
+
+val bitmap = BitmapFactory.decodeFile(photoUri?.path)
+                        classifier.recognizeImage(bitmap)
                         openWholeImageActivity(photoUri.toString())
                     }
                 })
