@@ -1,10 +1,10 @@
 package com.example.knowthisdog.api.dto
 
-import com.example.knowthisdog.model.Dog
+import com.example.knowthisdog.auth.model.Dog
 
 class DogDTOMapper {
 
-    private fun fromDogDTOToDogDomain(dogDTO: DogDTO): Dog {
+    fun fromDogDTOToDogDomain(dogDTO: DogDTO): Dog {
         return Dog(
             dogDTO.id, dogDTO.index, dogDTO.name, dogDTO.type,
             dogDTO.heightFemale, dogDTO.heightMale, dogDTO.imageUrl, dogDTO.lifeExpectancy,

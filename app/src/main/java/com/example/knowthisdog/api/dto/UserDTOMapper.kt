@@ -1,6 +1,6 @@
 package com.example.knowthisdog.api.dto
 
-import com.example.knowthisdog.model.User
+import com.example.knowthisdog.auth.model.User
 
 class UserDTOMapper {
     fun fromUserDTOToUserDomain(userDTO: UserDTO): User =

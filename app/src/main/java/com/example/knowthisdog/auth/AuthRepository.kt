@@ -6,7 +6,7 @@ import com.example.knowthisdog.api.dto.LoginDTO
 import com.example.knowthisdog.api.dto.SignUpDTO
 import com.example.knowthisdog.api.dto.UserDTOMapper
 import com.example.knowthisdog.api.makeNetworkCall
-import com.example.knowthisdog.model.User
+import com.example.knowthisdog.auth.model.User
 
 class AuthRepository {
 
@@ -17,7 +17,7 @@ class AuthRepository {
         val loginResponse = DogsApi.retrofitService.login(loginDTO)
 
 
-        if( loginResponse.isSucess) {
+        if( loginResponse.isSuccess) {
             throw Exception(loginResponse.message)
         }
 
@@ -32,7 +32,7 @@ suspend fun signUp(email: String, password: String,
         val signUpResponse = DogsApi.retrofitService.signUp(signUpDTO)
 
 
-        if( signUpResponse.isSucess) {
+        if( signUpResponse.isSuccess) {
             throw Exception(signUpResponse.message)
         }
 

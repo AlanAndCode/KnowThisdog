@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import coil.load
-import com.example.knowthisdog.model.Dog
+import com.example.knowthisdog.auth.model.Dog
 import com.example.knowthisdog.R
 import com.example.knowthisdog.databinding.ActivityDogDetailBinding
 

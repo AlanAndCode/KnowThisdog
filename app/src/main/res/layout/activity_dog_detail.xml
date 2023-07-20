@@ -6,7 +6,7 @@
 
         <variable
             name="dog"
-            type="com.example.knowthisdog.model.Dog" />
+            type="com.example.knowthisdog.auth.model.Dog" />
     </data>
 
     <FrameLayout

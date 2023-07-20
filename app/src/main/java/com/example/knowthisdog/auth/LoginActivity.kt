@@ -8,11 +8,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.findNavController
-import com.example.knowthisdog.MainActivity
+import com.example.knowthisdog.main.MainActivity
 import com.example.knowthisdog.R
 import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.databinding.ActivityLoginBinding
-import com.example.knowthisdog.model.User
+import com.example.knowthisdog.auth.model.User
 
 
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions, SignUpFragment.SignUpFragmentActions {
@@ -48,7 +48,7 @@ if(user != null){
     }
 
     private fun startMainActivity(){
-startActivity(Intent(this,MainActivity::class.java))
+startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
     private fun showErrorDialog(messageId: Int){

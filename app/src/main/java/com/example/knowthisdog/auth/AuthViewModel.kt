@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.knowthisdog.api.ApiResponseStatus
-import com.example.knowthisdog.model.User
+import com.example.knowthisdog.auth.model.User
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {

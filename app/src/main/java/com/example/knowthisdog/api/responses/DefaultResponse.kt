@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 class DefaultResponse (
         val message: String,
 
-        @field:Json(name = "is_sucess") val isSucess: Boolean,
+        @field:Json(name = "is_success") val isSuccess: Boolean,
         val data: UserResponse,
 
         )
