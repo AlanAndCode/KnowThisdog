@@ -1,4 +1,4 @@
-package com.example.knowthisdog
+package com.example.knowthisdog.main
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -7,14 +7,23 @@ import android.os.Bundle
 import android.Manifest
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.example.knowthisdog.LABEL_PATH
+import com.example.knowthisdog.MODEL_PATH
+import com.example.knowthisdog.R
+import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.api.ApiServiceInterceptor
+import com.example.knowthisdog.api.dogdetail.DogDetailActivity
+import com.example.knowthisdog.api.dogdetail.DogDetailActivity.Companion.DOG_KEY
 import com.example.knowthisdog.auth.LoginActivity
+import com.example.knowthisdog.auth.model.Dog
 import com.example.knowthisdog.auth.model.User
 import com.example.knowthisdog.databinding.ActivityMainBinding
 import com.example.knowthisdog.dogList.DogListActivity
@@ -44,6 +53,7 @@ private lateinit var imageCapture: ImageCapture
 private lateinit var cameraExecutor: ExecutorService
 private lateinit var classifier: Classifier
 private var isCameraReady = false
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -74,8 +84,31 @@ private var isCameraReady = false
             }
 
         }
+       viewModel.status.observe(this){
+        status ->
+        when (status) {
+        is ApiResponseStatus.Error -> {
+            binding.loadingWheel.visibility = View.GONE
+            Toast.makeText(this, status.messageId, Toast.LENGTH_SHORT).show()
 
+        }
+        is ApiResponseStatus.Loading -> binding.loadingWheel.visibility = View.VISIBLE
+        is ApiResponseStatus.Success -> binding.loadingWheel.visibility = View.GONE
+    }
+}
+        viewModel.dog.observe(this){
+            dog ->
+            if (dog != null) {
+                openDogDetailActivity(dog)
+            }
+        }
         requestCameraPermission()
+    }
+
+    private fun openDogDetailActivity(dog: Dog) {
+        val intent = Intent(this, DogDetailActivity::class.java)
+        intent.putExtra(DOG_KEY, dog)
+        startActivity(intent)
     }
 
     override fun onDestroy() {
@@ -155,19 +188,15 @@ private var isCameraReady = false
                        val photoUri = outputFileResults.savedUri
 
 val bitmap = BitmapFactory.decodeFile(photoUri?.path)
-                        classifier.recognizeImage(bitmap)
-                        openWholeImageActivity(photoUri.toString())
+                       val dogRecognition = classifier.recognizeImage(bitmap).first()
+                        viewModel.getDogByMlId(dogRecognition.id)
+
                     }
                 })
 
 
     }
 
-    private fun openWholeImageActivity(photoUri: String){
-val intent = Intent(this, WholeImageActivity::class.java)
-        intent.putExtra(WholeImageActivity.PHOTO_URI_KEY, photoUri)
-        startActivity(intent)
-    }
 
     private fun getOutputPhotoFile(): File {
         val mediaDir = externalMediaDirs.firstOrNull()?.let{
