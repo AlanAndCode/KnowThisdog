@@ -59,12 +59,21 @@ it
         val defaultResponse = retrofitService.addDogToUser(addDogToUserDTO)
 
 
-        if (!defaultResponse.isSucess){
+        if (!defaultResponse.isSuccess){
             throw Exception(defaultResponse.message)
         }
     }
 
+   suspend fun getDogByMlId(mlDogId: String): ApiResponseStatus<Dog> = makeNetworkCall {
+       val response = retrofitService.getDogByMlId(mlDogId)
 
+       if(!response.isSuccess){
+           throw Exception(response.message)
+       }
+
+       val dogDTOMapper = DogDTOMapper()
+       dogDTOMapper.fromDogDTOToDogDomain(response.data.dog)
+   }
    private suspend fun getUserDogs(): ApiResponseStatus<List<Dog>> = makeNetworkCall {
         val dogListApiResponse = retrofitService.getAllDogs()
         val dogDTOList = dogListApiResponse.data.dogs
