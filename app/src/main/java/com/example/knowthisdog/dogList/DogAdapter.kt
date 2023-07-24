@@ -30,11 +30,6 @@ private  var onItemClickListener: ((Dog) -> Unit)? = null
             this.onItemClickListener = onItemClickListener
         }
 
-    private  var onLongItemClickListener: ((Dog) -> Unit)? = null
-    fun setLongOnItemClickListener(onLongItemClickListener: (Dog) -> Unit){
-        this.onLongItemClickListener = onLongItemClickListener
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): DogViewHolder {
 
@@ -64,10 +59,7 @@ private  var onItemClickListener: ((Dog) -> Unit)? = null
 
             }
 
-        binding.dogListItemLayout.setOnLongClickListener {
-            onLongItemClickListener?.invoke(dog)
-true
-        }
+
             binding.dogImage.load(dog.imageUrl)
         } else {
             binding.dogImage.visibility = View.GONE
@@ -78,10 +70,7 @@ true
             R.drawable.dog_list_item_null_background
 
             )
-            binding.dogListItemLayout.setOnLongClickListener {
-                onLongItemClickListener?.invoke(dog)
-                true
-            }
+
 
         }
     }
