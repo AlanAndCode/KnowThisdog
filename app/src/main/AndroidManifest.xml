@@ -15,6 +15,11 @@
         android:theme="@style/Theme.KnowThisDog"
         tools:targetApi="31">
         <activity
+            android:name=".DogDetailComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_dog_detail_compose"
+            android:theme="@style/Theme.KnowThisDog" />
+        <activity
             android:name=".WholeImageActivity"
             android:exported="false" />
         <activity
