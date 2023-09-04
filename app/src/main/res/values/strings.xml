@@ -29,4 +29,6 @@
     <string name="logout">logout</string>
     <string name="error_adding_dog">error adding dog</string>
     <string name="camera_denied">You need to acept camera permissions to user camaera</string>
+    <string name="not_found_dog">Dog not found</string>
+    <string name="title_activity_dog_detail_compose">DogDetailComposeActivity</string>
 </resources>
