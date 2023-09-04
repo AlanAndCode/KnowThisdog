@@ -9,13 +9,14 @@ data class Dog(
     val index: Int,
     val name: String,
     val type: String,
-    val heightFemale: String,
-    val heightMale: String,
+    val heightFemale: Double,
+    val heightMale: Double,
     val imageUrl: String,
     val lifeExpectancy: String,
     val temperament: String,
     val weightFemale: String,
-    val weightMale: String
+    val weightMale: String,
+    val inCollection: Boolean = true
                 ) : Parcelable, Comparable<Dog>{
     override fun compareTo(other: Dog) =
        if (this.index > other.index){

@@ -12,7 +12,7 @@ import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.api.dogdetail.DogDetailActivity
 import com.example.knowthisdog.api.dogdetail.DogDetailActivity.Companion.DOG_KEY
 import com.example.knowthisdog.databinding.ActivityDogListBinding
-
+private const val GRID_SPAN_COUNT = 3
 class DogListActivity : AppCompatActivity() {
 
     private val dogListViewModel: DogListViewModel by viewModels()
@@ -24,7 +24,7 @@ class DogListActivity : AppCompatActivity() {
         val loadingWheel = binding.loadingWheel
 
         val recycler = binding.dogRecycler
-        recycler.layoutManager = GridLayoutManager(this, 3)
+        recycler.layoutManager = GridLayoutManager(this, GRID_SPAN_COUNT)
 
 
         val adapter = DogAdapter()
@@ -36,10 +36,7 @@ class DogListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        adapter.setLongOnItemClickListener {
-dogListViewModel.addDogToUser(it.id)
 
-        }
         recycler.adapter = adapter
 
 

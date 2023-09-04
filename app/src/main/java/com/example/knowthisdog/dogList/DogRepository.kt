@@ -15,20 +15,20 @@ class DogRepository {
 
     suspend fun getDogCollection(): ApiResponseStatus<List<Dog>> {
 return withContext(Dispatchers.IO) {
-    val allDogsListReponseDeferred =  async {  downloadDogs() }
+    val allDogsListResponseDeferred =  async {  downloadDogs() }
     val userDogsListResponseDeferred = async {  getUserDogs() }
 
-    val allDogsListReponse = allDogsListReponseDeferred.await()
+    val allDogsListResponse = allDogsListResponseDeferred.await()
     val userDogsListResponse = userDogsListResponseDeferred.await()
 
-    if (allDogsListReponse is ApiResponseStatus.Error) {
-        allDogsListReponse
+    if (allDogsListResponse is ApiResponseStatus.Error) {
+        allDogsListResponse
     } else if (userDogsListResponse is ApiResponseStatus.Error) {
         userDogsListResponse
-    } else if (allDogsListReponse is ApiResponseStatus.Success && userDogsListResponse is ApiResponseStatus.Success) {
+    } else if (allDogsListResponse is ApiResponseStatus.Success && userDogsListResponse is ApiResponseStatus.Success) {
         ApiResponseStatus.Success(
             getCollectionList(
-                allDogsListReponse.data,
+                allDogsListResponse.data,
                 userDogsListResponse.data
             )
         )
@@ -38,11 +38,12 @@ return withContext(Dispatchers.IO) {
 }
     }
 
-    private fun getCollectionList(allDogList: List<Dog>, userDogList: List<Dog>): List<Dog> = allDogList.map {
+    private fun getCollectionList(allDogList: List<Dog>, userDogList: List<Dog>)= allDogList.map {
     if(userDogList.contains(it)){
 it
     } else {
-        Dog(it.id, it.index, "", "", it.heightFemale, it.heightMale, "", "", "", "", "", inCollection = false)
+        Dog(it.id, it.index, "", "", it.heightFemale, it.heightMale, "", "",
+            "", "", "", inCollection = false)
     }
 
     }.sorted()
@@ -75,7 +76,7 @@ it
        dogDTOMapper.fromDogDTOToDogDomain(response.data.dog)
    }
    private suspend fun getUserDogs(): ApiResponseStatus<List<Dog>> = makeNetworkCall {
-        val dogListApiResponse = retrofitService.getAllDogs()
+        val dogListApiResponse = retrofitService.getUserDogs()
         val dogDTOList = dogListApiResponse.data.dogs
         val dogDTOMapper = DogDTOMapper()
         dogDTOMapper.fromDogDTOListToDogDomainList(dogDTOList)
