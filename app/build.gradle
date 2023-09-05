@@ -93,7 +93,7 @@ dependencies {
     implementation 'androidx.compose.material:material-icons-extended:1.5.0'
     implementation 'androidx.activity:activity-compose:1.7.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
-
+    implementation("io.coil-kt:coil-compose:2.4.0")
     // Retrofit to download dogs, Moshi convert json into object that can be used in the application
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
