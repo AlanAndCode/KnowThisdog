@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import coil.annotation.ExperimentalCoilApi
 import com.example.knowthisdog.api.ApiResponseStatus
-import com.example.knowthisdog.api.dogdetail.DogDetailActivity
-import com.example.knowthisdog.api.dogdetail.DogDetailActivity.Companion.DOG_KEY
+import com.example.knowthisdog.api.dogdetail.DogDetailComposeActivity
 import com.example.knowthisdog.databinding.ActivityDogListBinding
 private const val GRID_SPAN_COUNT = 3
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
+@ExperimentalCoilApi
 class DogListActivity : AppCompatActivity() {
 
     private val dogListViewModel: DogListViewModel by viewModels()
@@ -31,8 +35,8 @@ class DogListActivity : AppCompatActivity() {
 
         adapter.setOnItemClickListener {
             //passing dog clicked to dog detail
-            val intent = Intent(this, DogDetailActivity::class.java)
-            intent.putExtra(DOG_KEY, it)
+            val intent = Intent(this, DogDetailComposeActivity::class.java)
+            intent.putExtra(DogDetailComposeActivity.DOG_KEY, it)
             startActivity(intent)
         }
 

@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.Manifest
-import android.graphics.*
 import android.os.Build
 import android.view.View
 import android.widget.Toast
@@ -20,9 +19,7 @@ import com.example.knowthisdog.MODEL_PATH
 import com.example.knowthisdog.R
 import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.api.ApiServiceInterceptor
-import com.example.knowthisdog.api.dogdetail.DogDetailActivity
-import com.example.knowthisdog.api.dogdetail.DogDetailActivity.Companion.DOG_KEY
-import com.example.knowthisdog.api.dogdetail.DogDetailActivity.Companion.IS_RECOGNITION_KEY
+import com.example.knowthisdog.api.dogdetail.DogDetailComposeActivity
 import com.example.knowthisdog.auth.LoginActivity
 import com.example.knowthisdog.auth.model.Dog
 import com.example.knowthisdog.auth.model.User
@@ -107,9 +104,9 @@ private var isCameraReady = false
 
 
     private fun openDogDetailActivity(dog: Dog) {
-        val intent = Intent(this, DogDetailActivity::class.java)
-        intent.putExtra(DOG_KEY, dog)
-        intent.putExtra(IS_RECOGNITION_KEY, true)
+        val intent = Intent(this, DogDetailComposeActivity::class.java)
+        intent.putExtra(DogDetailComposeActivity.DOG_KEY, dog)
+        intent.putExtra(DogDetailComposeActivity.IS_RECOGNITION_KEY, true)
         startActivity(intent)
     }
 
