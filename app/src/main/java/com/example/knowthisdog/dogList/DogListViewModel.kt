@@ -1,5 +1,6 @@
 package com.example.knowthisdog.dogList
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,13 +13,11 @@ import kotlinx.coroutines.launch
 
 class DogListViewModel : ViewModel() {
 
-private val _doglist = MutableLiveData<List<Dog>>()
-val dogList: LiveData<List<Dog>>
-get() = _doglist
+var doglist = mutableStateOf<List<Dog>>(listOf())
+    private set
 
-    private val _status = MutableLiveData<ApiResponseStatus<Any>>()
-    val status: LiveData<ApiResponseStatus<Any>>
-        get() = _status
+    var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
+        private set
 
     private val dogRepository = DogRepository()
 
@@ -30,7 +29,7 @@ get() = _doglist
 
     private fun getDogCollection(){
         viewModelScope.launch {
-            _status.value = ApiResponseStatus.Loading()
+            status.value = ApiResponseStatus.Loading()
             handleResponseStatus(dogRepository.getDogCollection())
         }
     }
@@ -39,10 +38,10 @@ get() = _doglist
 @Suppress("UNCHECKED_CAST")
     private fun handleResponseStatus(apiResponseStatus: ApiResponseStatus<List<Dog>>){
         if(apiResponseStatus is ApiResponseStatus.Success){
-            _doglist.value = apiResponseStatus.data!!
+            doglist.value = apiResponseStatus.data!!
         }
 
-        _status.value = apiResponseStatus as ApiResponseStatus<Any>
+        status.value = apiResponseStatus as ApiResponseStatus<Any>
     }
 
 

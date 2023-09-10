@@ -1,6 +1,5 @@
 package com.example.knowthisdog.api.dogdetail
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,14 +25,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.knowthisdog.R
 import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.auth.model.Dog
 
 @ExperimentalCoilApi
 @Composable
-fun DogDetailScreen(dog: Dog, status: ApiResponseStatus<Any>? = null) {
+fun DogDetailScreen(dog: Dog,
+                    status: ApiResponseStatus<Any>? = null,
+                    onButtonClicked: () -> Unit,
+                    onErrorDialogDismiss: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -53,7 +55,7 @@ DogInformation(dog)
             modifier = Modifier
                 .align(alignment = Alignment.BottomCenter)
                 .semantics { testTag = "close-details-screen-fab" },
-            onClick = {
+            onClick = { onButtonClicked()
 
             },
         ) {
@@ -65,6 +67,10 @@ DogInformation(dog)
 
         if (status is ApiResponseStatus.Loading) {
             LoadingWheel()
+        } else if( status is ApiResponseStatus.Error){
+            ErrorDialog(status, onErrorDialogDismiss)
+                
+
         }
 
     }
@@ -83,6 +89,27 @@ fun LoadingWheel(){
         )
     }
 }
+
+@Composable
+fun ErrorDialog(status: ApiResponseStatus.Error<Any>,
+                onDialogDismiss: () -> Unit,
+){
+    AlertDialog(
+    onDismissRequest = { }  ,
+    title = {
+        Text(stringResource(R.string.error_dialog_title))
+    },
+     text = {
+            Text(stringResource(id = status.messageId))
+        },
+     confirmButton = {
+         Button(onClick = { onDialogDismiss() }) {
+               Text((stringResource(R.string.try_again)))
+         }
+        }
+    )
+}
+
 @Composable
 fun DogInformation(dog: Dog) {
     Box(
@@ -209,6 +236,7 @@ private fun LifeIcon() {
         ) { }
     }
 }
+
 @Composable
 private fun VerticalDivider() {
     Divider(
@@ -270,5 +298,5 @@ private fun DogDataColumn(
 @Preview
 @Composable
 fun DogDetailScreenPreview(){
-    DogDetailScreen()
+    DogDetailScreen(Dog, onButtonClicked = { }, onErrorDialogDismiss = { })
 }

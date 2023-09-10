@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class DogDetailViewModel: ViewModel() {
 
-    var  status = mutableStateOf<ApiResponseStatus<Any>?>(ApiResponseStatus.Loading())
+    var  status = mutableStateOf<ApiResponseStatus<Any>?>(null)
        private set
     private val dogRepository = DogRepository()
     fun addDogToUser(dogId: Long) {
@@ -24,5 +24,9 @@ class DogDetailViewModel: ViewModel() {
 
     private fun handleAddDogToUserResponseStatus(apiResponseStatus: ApiResponseStatus<Any>) {
         status.value = apiResponseStatus
+    }
+
+    fun resetApiResponseStatus() {
+        status.value = null
     }
 }

@@ -31,4 +31,6 @@
     <string name="camera_denied">You need to acept camera permissions to user camaera</string>
     <string name="not_found_dog">Dog not found</string>
     <string name="title_activity_dog_detail_compose">DogDetailComposeActivity</string>
+    <string name="try_again">Try again</string>
+    <string name="error_dialog_title">Oops, something happened!</string>
 </resources>
