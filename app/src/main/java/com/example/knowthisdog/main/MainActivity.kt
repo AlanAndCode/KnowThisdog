@@ -13,7 +13,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.core.content.ContextCompat
+import coil.annotation.ExperimentalCoilApi
 import com.example.knowthisdog.LABEL_PATH
 import com.example.knowthisdog.MODEL_PATH
 import com.example.knowthisdog.R
@@ -31,7 +34,9 @@ import com.example.knowthisdog.settings.SettingsActivity
 import org.tensorflow.lite.support.common.FileUtil
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
+@ExperimentalCoilApi
 class MainActivity : AppCompatActivity() {
 
         private   val requestPermissionLauncher =
