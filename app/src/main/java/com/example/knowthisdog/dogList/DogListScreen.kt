@@ -64,7 +64,7 @@ fun DogListScreenTopBar(
 fun BackNavigationIcon(
     onClick: () -> Unit
 ) {
-IconButton(onClick = { }) {
+IconButton(onClick = onClick) {
     Icon(painter = rememberVectorPainter(image = Icons.Sharp.ArrowBack),
         contentDescription = null)
 }
