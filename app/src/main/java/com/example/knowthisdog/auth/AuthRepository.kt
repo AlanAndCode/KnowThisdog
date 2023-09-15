@@ -1,23 +1,32 @@
 package com.example.knowthisdog.auth
 
 import com.example.knowthisdog.api.ApiResponseStatus
+import com.example.knowthisdog.api.ApiService
 import com.example.knowthisdog.api.DogsApi
 import com.example.knowthisdog.api.dto.LoginDTO
 import com.example.knowthisdog.api.dto.SignUpDTO
 import com.example.knowthisdog.api.dto.UserDTOMapper
 import com.example.knowthisdog.api.makeNetworkCall
 import com.example.knowthisdog.auth.model.User
+import javax.inject.Inject
 
-class AuthRepository {
+interface AuthTasks {
+    suspend fun login(email: String, password: String): ApiResponseStatus<User>
+    suspend fun signUp(
+        email: String, password: String,
+        passwordConfirmation: String
+    ): ApiResponseStatus<User>
+}
 
+class AuthRepository @Inject constructor(
+    private val apiService: ApiService,
+) : AuthTasks {
 
-
-    suspend fun login(email: String, password: String): ApiResponseStatus<User> = makeNetworkCall {
+    override suspend fun login(email: String, password: String): ApiResponseStatus<User> = makeNetworkCall {
         val loginDTO = LoginDTO(email, password)
-        val loginResponse = DogsApi.retrofitService.login(loginDTO)
+        val loginResponse = apiService.login(loginDTO)
 
-
-        if( loginResponse.isSuccess) {
+        if (!loginResponse.isSuccess) {
             throw Exception(loginResponse.message)
         }
 
@@ -26,13 +35,14 @@ class AuthRepository {
         userDTOMapper.fromUserDTOToUserDomain(userDTO)
     }
 
-suspend fun signUp(email: String, password: String,
-                       passwordConfirmation: String): ApiResponseStatus<User> = makeNetworkCall {
+    override suspend fun signUp(
+        email: String, password: String,
+        passwordConfirmation: String
+    ): ApiResponseStatus<User> = makeNetworkCall {
         val signUpDTO = SignUpDTO(email, password, passwordConfirmation)
-        val signUpResponse = DogsApi.retrofitService.signUp(signUpDTO)
+        val signUpResponse = apiService.signUp(signUpDTO)
 
-
-        if( signUpResponse.isSuccess) {
+        if (!signUpResponse.isSuccess) {
             throw Exception(signUpResponse.message)
         }
 

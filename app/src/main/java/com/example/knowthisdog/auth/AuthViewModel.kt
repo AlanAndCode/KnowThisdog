@@ -1,53 +1,97 @@
 package com.example.knowthisdog.auth
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.knowthisdog.R
 import com.example.knowthisdog.api.ApiResponseStatus
 import com.example.knowthisdog.auth.model.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authRepository: AuthTasks
+) : ViewModel() {
 
+    var user = mutableStateOf<User?>(null)
+        private set
 
+    var emailError = mutableStateOf<Int?>(null)
+        private set
 
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User>
-        get() = _user
+    var passwordError = mutableStateOf<Int?>(null)
+        private set
 
-    private val _status = MutableLiveData<ApiResponseStatus<User>>()
-    val status: LiveData<ApiResponseStatus<User>>
-        get() = _status
+    var confirmPasswordError = mutableStateOf<Int?>(null)
+        private set
 
-    private val authRepository = AuthRepository()
+    var status = mutableStateOf<ApiResponseStatus<User>?>(null)
+        private set
 
     fun login(email: String, password: String) {
-viewModelScope.launch {
-    _status.value = ApiResponseStatus.Loading()
-    handleResponseStatus(authRepository.login(email, password))
-
-}
-
+        when {
+            email.isEmpty() -> emailError.value = R.string.email_is_not_valid
+            password.isEmpty() -> passwordError.value = R.string.password_must_not_be_empty
+            else -> {
+                viewModelScope.launch {
+                    status.value = ApiResponseStatus.Loading()
+                    handleResponseStatus(
+                        authRepository.login(
+                            email,
+                            password
+                        )
+                    )
+                }
+            }
+        }
     }
 
-    fun signUp(email: String, password: String,
-     passwordConfirmation: String) {
-        viewModelScope.launch {
-            _status.value = ApiResponseStatus.Loading()
-            handleResponseStatus(authRepository.signUp(email, password, passwordConfirmation))
+    fun signUp(
+        email: String, password: String,
+        passwordConfirmation: String
+    ) {
+        when {
+            email.isEmpty() -> emailError.value = R.string.email_is_not_valid
+            password.isEmpty() -> passwordError.value = R.string.password_must_not_be_empty
+            passwordConfirmation.isEmpty() -> confirmPasswordError.value =
+                R.string.password_must_not_be_empty
+            password != passwordConfirmation -> {
+                passwordError.value = R.string.passwords_do_not_match
+                confirmPasswordError.value = R.string.passwords_do_not_match
+            }
+            else -> {
+                viewModelScope.launch {
+                    status.value = ApiResponseStatus.Loading()
+                    handleResponseStatus(
+                        authRepository.signUp(
+                            email,
+                            password, passwordConfirmation
+                        )
+                    )
+                }
+            }
+        }
+    }
 
+    fun resetErrors() {
+        emailError.value = null
+        passwordError.value = null
+        confirmPasswordError.value = null
+    }
+
+    private fun handleResponseStatus(apiResponseStatus: ApiResponseStatus<User>) {
+        if (apiResponseStatus is ApiResponseStatus.Success) {
+            user.value = apiResponseStatus.data!!
         }
 
+        status.value = apiResponseStatus
     }
 
-    private fun handleResponseStatus(apiResponseStatus: ApiResponseStatus<User>){
-        if(apiResponseStatus is ApiResponseStatus.Success){
-            _user.value = apiResponseStatus.data!!
-        }
-
-        _status.value = apiResponseStatus
+    fun resetApiResponseStatus() {
+        status.value = null
     }
-
-
 }
